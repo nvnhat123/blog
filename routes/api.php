@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
@@ -36,4 +35,5 @@ Route::group(['prefix' => 'auth'], function () {
         // 'as' => 'passport.token',
         'middleware' => ['format-response-sign-in'],
     ]);
+    Route::middleware(['auth:member'])->post('logout', [AuthController::class, 'logout']);
 });
