@@ -4,6 +4,15 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Illuminate\Auth\Access\AuthorizationException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -37,5 +46,50 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        $error = responder()->setData(null);
+
+        switch (true) {
+            case $e instanceof ModelNotFoundException:
+                return $error
+                    ->setStatus(Response::HTTP_NOT_FOUND)
+                    ->setErrMsg('Không tìm thấy bản ghi.')
+                    ->get();
+            case $e instanceof NotFoundHttpException:
+                return $error
+                    ->setStatus(Response::HTTP_NOT_FOUND)
+                    ->setErrMsg('Đường dẫn không tồn tại.')
+                    ->get();
+            case $e instanceof AuthenticationException:
+                return $error
+                    ->setStatus(Response::HTTP_UNAUTHORIZED)
+                    ->setErrMsg($e->getMessage())
+                    ->get();
+            case $e instanceof ValidationException:
+                return $error
+                    ->setErrMsg($e->getMessage())
+                    ->setData($e->errors())
+                    ->get();
+            case $e instanceof MethodNotAllowedHttpException:
+                return $error
+                    ->setStatus($e->getStatusCode())
+                    ->setErrMsg($e->getMessage())
+                    ->get();
+            case $e instanceof AuthorizationException:
+                $e = new AccessDeniedHttpException($e->getMessage(), $e);
+                $message = $e->getMessage() === 'This action is unauthorized.' ? 'Không có quyền thực hiện.' : $e->getMessage();
+
+                return $error
+                    ->setStatus($e->getStatusCode())
+                    ->setErrMsg($message)
+                    ->get();
+            default:
+                return $error
+                    ->setData(['exception' => get_class($e)])
+                    ->get();
+        }
     }
 }

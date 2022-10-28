@@ -19,7 +19,7 @@ use App\Http\Controllers\MemberController;
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [
         'uses' => AccessTokenController::class.'@issueToken',
-        // 'as' => 'passport.token',
+        'as' => 'login',
         'middleware' => ['format-response-sign-in', 'add-data-response'],
     ]);
 
