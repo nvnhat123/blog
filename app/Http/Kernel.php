@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'format-response-sign-in' => \App\Http\Middleware\FormatResponseSignIn::class,
+        'add-data-response' => \App\Http\Middleware\AddDataResponse::class,
     ];
 }

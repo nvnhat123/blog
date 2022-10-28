@@ -33,7 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [
         'uses' => AccessTokenController::class.'@issueToken',
         // 'as' => 'passport.token',
-        'middleware' => ['format-response-sign-in'],
+        'middleware' => ['format-response-sign-in', 'add-data-response'],
     ]);
     Route::middleware(['auth:member'])->post('logout', [AuthController::class, 'logout']);
 });
