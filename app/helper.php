@@ -1,10 +1,9 @@
 <?php
 
 use App\Services\ResponseService;
-use Illuminate\Http\JsonResponse;
 
 if (! function_exists('responder')) {
-    function responder(): JsonResponse
+    function responder(): ResponseService
     {
         return app(ResponseService::class);
     }

@@ -32,7 +32,7 @@ class ResponseService
 
     public function setErrMsg(string $errMsg): self
     {
-        $this->payload['error_messages'] = $errMsg;
+        $this->response['error_messages'] = $errMsg;
 
         return $this;
     }
@@ -43,7 +43,7 @@ class ResponseService
      */
     public function setData($data = []): self
     {
-        $this->payload['data'] = $data;
+        $this->response['data'] = $data;
 
         return $this;
     }
@@ -60,6 +60,11 @@ class ResponseService
     public function get(): JsonResponse
     {
         return response()->json($this->response);
+    }
+
+    public function getResponse(): array
+    {
+        return $this->response;
     }
 
 }
