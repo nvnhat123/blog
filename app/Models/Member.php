@@ -7,7 +7,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
 
-class Employee extends User
+class Member extends User
 {
     use HasFactory, HasApiTokens, SoftDeletes;
 
@@ -21,14 +21,14 @@ class Employee extends User
         // 'dob',
     ];
 
-    public function findForPassport(string $username): ?Employee
+    public function findForPassport(string $username): ?Member
     {
-        $employee = $this->newQuery()->where('username', $username)->first();
+        $member = $this->newQuery()->where('username', $username)->first();
 
-        if (!$employee) {
+        if (!$member) {
             return null;
         }
 
-        return $employee;
+        return $member;
     }
 }

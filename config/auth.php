@@ -44,9 +44,9 @@ return [
         //     'driver' => 'passport',
         //     'provider' => 'users',
         // ]
-        'employee' => [
+        'member' => [
             'driver' => 'passport',
-            'provider' => 'employees',
+            'provider' => 'members',
         ]
     ],
 
@@ -73,9 +73,9 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'employees' => [
+        'members' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Employee::class,
+            'model' => App\Models\Member::class,
         ]
 
         // 'users' => [
@@ -106,9 +106,9 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'employees' => [
-            'provider' => 'employees',
-            'table' => 'employee_password_resets',
+        'members' => [
+            'provider' => 'members',
+            'table' => 'member_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
