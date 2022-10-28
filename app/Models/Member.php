@@ -16,9 +16,9 @@ class Member extends User
         'email',
         'password',
         'name',
-        // 'phone_number',
-        // 'status',
-        // 'dob',
+        'phone_number',
+        'status',
+        'dob',
     ];
 
     /**
