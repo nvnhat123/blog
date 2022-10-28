@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Services\AuthService;
+use App\Transformers\Auth\MemberResource;
 class AuthController extends Controller
 {
     protected AuthService $authService;
@@ -19,5 +20,12 @@ class AuthController extends Controller
         $this->authService->logout($request->user());
 
         return responder()->getSuccess();
+    }
+
+    public function info(Request $request): JsonResponse
+    {
+        $resource = new MemberResource($request->user());
+
+        return responder()->getSuccess($resource);
     }
 }

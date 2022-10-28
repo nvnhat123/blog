@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,25 +16,19 @@ use Laravel\Passport\Http\Controllers\AccessTokenController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::group(['prefix' => 'auth'], function () {
-//     Route::post('login', [AuthController::class, 'login']);
-//     Route::post('signup', [AuthController::class, 'signup']);
-
-//     Route::group(['middleware' => 'auth:api'], function () {
-//         Route::get('logout', [AuthController::class, 'logout']);
-//         Route::get('user', [AuthController::class, 'user']);
-//     });
-// });
-
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [
         'uses' => AccessTokenController::class.'@issueToken',
         // 'as' => 'passport.token',
         'middleware' => ['format-response-sign-in', 'add-data-response'],
     ]);
-    Route::middleware(['auth:member'])->post('logout', [AuthController::class, 'logout']);
+
+    Route::group(['middleware' => 'auth:member'], function () {
+        Route::post('logout', [AuthController::class, 'logout']);
+        Route::get('info', [AuthController::class, 'info']);
+    });
+});
+
+Route::group(['prefix' => 'members'], function () {
+    Route::get('/', [MemberController::class, 'index']);
 });

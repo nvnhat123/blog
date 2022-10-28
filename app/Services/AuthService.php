@@ -7,7 +7,7 @@ use Laravel\Passport\RefreshTokenRepository;
 
 class AuthService
 {
-    public function logout($user)
+    public function logout($user): void
     {
         $this->revokeToken($user->token());
     }

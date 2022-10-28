@@ -21,6 +21,16 @@ class Member extends User
         // 'dob',
     ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'deleted_at',
+    ];
+
     public function findForPassport(string $username): ?Member
     {
         $member = $this->newQuery()->where('username', $username)->first();
