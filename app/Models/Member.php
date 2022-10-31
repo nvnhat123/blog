@@ -7,7 +7,10 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Collection;
+use App\Models\Blog;
 
 /**
  * @property integer id
@@ -18,6 +21,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string username
  * @property string phone_number
  * @property integer status
+ * @property Collection blogs
  * @property integer created_at
  * @property integer updated_at
  */
@@ -59,6 +63,11 @@ class Member extends User implements HasMedia
         }
 
         return $member;
+    }
+
+    public function blogs(): HasMany
+    {
+        return $this->hasMany(Blog::class);
     }
 
     public function setUsername(string $username): self

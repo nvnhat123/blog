@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,17 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-Route::group(['prefix' => 'members', 'middleware' => 'auth:member'], function () {
-    Route::get('/', [MemberController::class, 'index']);
-    Route::post('/', [MemberController::class, 'store']);
+Route::group(['middleware' => 'auth:member'], function () {
+    Route::group(['prefix' => 'members'], function () {
+        Route::get('/', [MemberController::class, 'index']);
+        Route::post('/', [MemberController::class, 'store']);
+    });
+
+    Route::group(['prefix' => 'blogs'], function () {
+        Route::get('/', [BlogController::class, 'index']);
+        Route::get('/{id}', [BlogController::class, 'show']);
+        Route::post('/', [BlogController::class, 'store']);
+        Route::put('/{id}', [BlogController::class, 'update']);
+        Route::delete('/{id}', [BlogController::class, 'destroy']);
+    });
 });

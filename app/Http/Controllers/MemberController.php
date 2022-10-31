@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Repositories\MemberRepository;
-use App\Transformers\Member\IndexResource as MemberIndexResource;
 use App\Http\Requests\Member\StoreRequest;
 use App\Transformers\Member\MemberResource;
 
@@ -21,7 +20,7 @@ class MemberController extends Controller
     public function index(Request $request): JsonResponse
     {
         $members = $this->repository->index($request);
-        $collection = MemberIndexResource::collection($members);
+        $collection = MemberResource::collection($members);
 
         return responder()->getSuccess($collection);
     }
