@@ -6,6 +6,7 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use App\Base\BaseRepository;
+use App\Events\ShowBlog;
 
 class BlogRepository extends BaseRepository
 {
@@ -32,9 +33,12 @@ class BlogRepository extends BaseRepository
         return $blog;
     }
 
-    public function show(int $id): Blog
+    public function show(int $id): ?Blog
     {
-        return $this->model->newQuery()->findOrFail($id);
+        $blog = $this->model->findOrFail($id);
+        ShowBlog::dispatch($blog);
+
+        return $this->model->findOrFail($id);
     }
 
     public function update(Request $request, int $id): Blog

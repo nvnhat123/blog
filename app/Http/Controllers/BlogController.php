@@ -28,24 +28,24 @@ class BlogController extends Controller
 
     public function store(StoreRequest $request): JsonResponse
     {
-        $member = $this->repository->store($request);
-        $resource = new BlogResource($member);
+        $blog = $this->repository->store($request);
+        $resource = new BlogResource($blog);
 
         return responder()->getSuccess($resource);
     }
 
     public function show(Request $request, int $id): JsonResponse
     {
-        $member = $this->repository->show($id);
-        $resource = new BlogResource($member);
+        $blog = $this->repository->show($id);
+        $resource = new BlogResource($blog);
 
         return responder()->getSuccess($resource);
     }
 
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
-        $member = $this->repository->update($request, $id);
-        $resource = new BlogResource($member);
+        $blog = $this->repository->update($request, $id);
+        $resource = new BlogResource($blog);
 
         return responder()->getSuccess($resource);
     }

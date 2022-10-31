@@ -19,4 +19,9 @@ abstract class BaseRepository
     {
         $this->model = app($this->model());
     }
+
+    public function findOrFail(int $id): ?model
+    {
+        return $this->model->newQuery()->findOrFail($id);
+    }
 }
