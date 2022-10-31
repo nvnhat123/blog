@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @property integer id
@@ -19,9 +21,9 @@ use Illuminate\Foundation\Auth\User;
  * @property integer created_at
  * @property integer updated_at
  */
-class Member extends User
+class Member extends User implements HasMedia
 {
-    use HasFactory, HasApiTokens, SoftDeletes;
+    use HasFactory, HasApiTokens, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'username',
@@ -35,6 +37,8 @@ class Member extends User
 
     const IS_ACTIVE = 0;
     const INACTIVE = 1;
+
+    const AVATAR_MEMBER = 'avatar_member';
 
     /**
      * The attributes that should be hidden for serialization.

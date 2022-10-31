@@ -24,6 +24,9 @@ class MemberRepository extends BaseRepository
     {
         /** @var Member $member */
         $member = new $this->model();
+        if ($request->hasFile('avatar')) {
+            $member->addMedia($request->file('avatar'))->toMediaCollection(Member::AVATAR_MEMBER);
+        }
         $member->setUsername($request->get('username'))
             ->setEmail($request->get('email'))
             ->setPassword(Hash::make($request->get('password')))
