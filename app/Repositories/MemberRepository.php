@@ -28,6 +28,7 @@ class MemberRepository extends BaseRepository
             ->setEmail($request->get('email'))
             ->setPassword(Hash::make($request->get('password')))
             ->setName($request->get('name'))
+            ->setStatus(Member::INACTIVE)
             ->save();
 
         return $member;

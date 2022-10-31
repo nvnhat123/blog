@@ -37,8 +37,8 @@ class Member extends User implements HasMedia
         'dob',
     ];
 
-    const IS_ACTIVE = 0;
-    const INACTIVE = 1;
+    const IS_ACTIVE = 1;
+    const INACTIVE = 0;
 
     const AVATAR_MEMBER = 'avatar_member';
 
@@ -96,7 +96,7 @@ class Member extends User implements HasMedia
         return $this;
     }
 
-    public function setStatus(?string $status): self
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
