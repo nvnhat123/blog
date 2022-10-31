@@ -4,7 +4,6 @@ namespace App\Http\Requests\Member;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Member;
 
 class StoreRequest extends FormRequest
 {
@@ -47,17 +46,6 @@ class StoreRequest extends FormRequest
                     }
                 }
             ],
-            // 'phone_number' => [
-            //     'nullable',
-            //     'regex:' . config('validator.number'),
-            // ],
-            // 'status' => [
-            //     Rule::in([Member::IS_ACTIVE, Member::INACTIVE]),
-            // ],
-            // 'dob' => [
-            //     'nullable',
-            //     'date_format:' . config('format.date_vn'),
-            // ],
         ];
     }
 }

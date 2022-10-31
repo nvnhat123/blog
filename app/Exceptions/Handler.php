@@ -78,6 +78,7 @@ class Handler extends ExceptionHandler
                 return $error
                     ->setErrMsg($e->getMessage())
                     ->setData($e->errors())
+                    ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                     ->get();
             case $e instanceof MethodNotAllowedHttpException:
                 return $error

@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:member'], function () {
     Route::group(['prefix' => 'members'], function () {
         Route::get('/', [MemberController::class, 'index']);
         Route::post('/', [MemberController::class, 'store']);
+        Route::put('/{id}', [MemberController::class, 'update']);
     });
 
     Route::group(['prefix' => 'blogs'], function () {

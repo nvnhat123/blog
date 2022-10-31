@@ -24,13 +24,26 @@ class MemberRepository extends BaseRepository
     {
         /** @var Member $member */
         $member = new $this->model();
-        if ($request->hasFile('avatar')) {
-            $member->addMedia($request->file('avatar'))->toMediaCollection(Member::AVATAR_MEMBER);
-        }
         $member
             ->setEmail($request->get('email'))
             ->setPassword(Hash::make($request->get('password')))
             ->setName($request->get('name'))
+            ->save();
+
+        return $member;
+    }
+
+    public function update(Request $request, int $id): Member
+    {
+        /** @var Member $member */
+        $member = $this->model->findOrFail($id);
+        if ($request->hasFile('avatar')) {
+            $member->addMedia($request->file('avatar'))->toMediaCollection(Member::AVATAR_MEMBER);
+        }
+        $member
+            ->setName($request->get('name'))
+            ->setPhoneNumber($request->get('phone_number'))
+            ->setDob($request->get('dob'))
             ->save();
 
         return $member;
