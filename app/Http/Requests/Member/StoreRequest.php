@@ -26,14 +26,6 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => [
-                'required',
-                'string',
-                'min:8',
-                'max:16',
-                Rule::unique('members'),
-                'regex:' . config('validator.username'),
-            ],
             'name' => 'required|string|min:8|max:30',
             'email' => [
                 'required',
@@ -55,17 +47,17 @@ class StoreRequest extends FormRequest
                     }
                 }
             ],
-            'phone_number' => [
-                'nullable',
-                'regex:' . config('validator.number'),
-            ],
-            'status' => [
-                Rule::in([Member::IS_ACTIVE, Member::INACTIVE]),
-            ],
-            'dob' => [
-                'nullable',
-                'date_format:' . config('format.date_vn'),
-            ],
+            // 'phone_number' => [
+            //     'nullable',
+            //     'regex:' . config('validator.number'),
+            // ],
+            // 'status' => [
+            //     Rule::in([Member::IS_ACTIVE, Member::INACTIVE]),
+            // ],
+            // 'dob' => [
+            //     'nullable',
+            //     'date_format:' . config('format.date_vn'),
+            // ],
         ];
     }
 }

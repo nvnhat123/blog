@@ -18,7 +18,6 @@ use App\Models\Blog;
  * @property string name
  * @property string password
  * @property string email
- * @property string username
  * @property string phone_number
  * @property integer status
  * @property Collection blogs
@@ -30,7 +29,6 @@ class Member extends User implements HasMedia
     use HasFactory, HasApiTokens, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
-        'username',
         'email',
         'password',
         'name',
@@ -56,7 +54,7 @@ class Member extends User implements HasMedia
 
     public function findForPassport(string $username): ?Member
     {
-        $member = $this->newQuery()->where('username', $username)->first();
+        $member = $this->newQuery()->where('email', $username)->first();
 
         if (!$member) {
             return null;
@@ -68,13 +66,6 @@ class Member extends User implements HasMedia
     public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
     }
 
     public function setEmail(string $email): self

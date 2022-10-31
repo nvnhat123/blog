@@ -27,13 +27,10 @@ class MemberRepository extends BaseRepository
         if ($request->hasFile('avatar')) {
             $member->addMedia($request->file('avatar'))->toMediaCollection(Member::AVATAR_MEMBER);
         }
-        $member->setUsername($request->get('username'))
+        $member
             ->setEmail($request->get('email'))
             ->setPassword(Hash::make($request->get('password')))
             ->setName($request->get('name'))
-            ->setPhoneNumber($request->get('phone_number'))
-            ->setStatus($request->get('status'))
-            ->setDob(convert_date_vn_to_en($request->get('dob')))
             ->save();
 
         return $member;

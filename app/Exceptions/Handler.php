@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Laravel\Passport\Exceptions\OAuthServerException;
 
 
 class Handler extends ExceptionHandler
@@ -53,6 +54,11 @@ class Handler extends ExceptionHandler
         $error = responder()->setData(null);
 
         switch (true) {
+            case $e instanceof OAuthServerException:
+                return $error
+                    ->setStatus(Response::HTTP_UNAUTHORIZED)
+                    ->setErrMsg('Tài khoản hoặc mật khẩu không chính xác.')
+                    ->get();
             case $e instanceof ModelNotFoundException:
                 return $error
                     ->setStatus(Response::HTTP_NOT_FOUND)
