@@ -6,6 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Repositories\MemberRepository;
 use App\Transformers\Member\IndexResource as MemberIndexResource;
+use App\Http\Requests\Member\StoreRequest;
+use App\Transformers\Member\MemberResource;
 
 class MemberController extends Controller
 {
@@ -22,5 +24,13 @@ class MemberController extends Controller
         $collection = MemberIndexResource::collection($members);
 
         return responder()->getSuccess($collection);
+    }
+
+    public function store(StoreRequest $request): JsonResponse
+    {
+        $member = $this->repository->store($request);
+        $resource = new MemberResource($member);
+
+        return responder()->getSuccess($resource);
     }
 }

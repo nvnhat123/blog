@@ -28,9 +28,4 @@ class AuthController extends Controller
 
         return responder()->getSuccess($resource);
     }
-
-    public function register(Request $request): JsonResponse
-    {
-
-    }
 }

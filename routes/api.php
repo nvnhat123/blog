@@ -29,6 +29,7 @@ Route::group(['prefix' => 'auth'], function () {
     });
 });
 
-Route::group(['prefix' => 'members'], function () {
+Route::group(['prefix' => 'members', 'middleware' => 'auth:member'], function () {
     Route::get('/', [MemberController::class, 'index']);
+    Route::post('/', [MemberController::class, 'store']);
 });
